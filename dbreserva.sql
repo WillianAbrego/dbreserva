@@ -137,3 +137,74 @@ alter table pago
 add constraint CHK_PAGO_FECHA
 CHECK (fecha<=getdate())
 go
+
+--implementar las relaciones entre las tablas de la base de datos
+--relacion entre la tabla pais y pasajero
+
+alter table pasajero
+add constraint FK_PASAJERO_PAIS
+FOREIGN KEY (idpais) references pais(idpais)
+go
+
+--relacion entre la tabla aeropuerto y pais
+
+alter table aeropuerto
+add constraint FK_AEROPUERTO_PAIS
+foreign key (idpais) references pais(idpais)
+go
+
+--relacion entre la tabla pago y pasajero
+alter table pago
+add constraint FK_PAGO_PASAJERO
+foreign key (idpasajero) references pasajero(idpasajero)
+go
+
+--relacion entre la tabla pago y reserva
+alter table pago
+add constraint FK_PAGO_RESERVA
+foreign key (idreserva) references reserva(idreserva)
+go
+
+--relacion entre la tabla avion y aerolinea
+alter table avion
+add constraint FK_AVION_AEROLINEA
+foreign key (idaerolinea) references aerolinea (idaerolinea)
+go
+
+--eliminar una relacion
+alter table avion
+drop constraint FK_AVION_AEROLINEA
+
+--RELACION entre la tabla vuelo y asiento
+alter table vuelo
+add constraint FK_VUELO_ASIENTO
+foreign key (idasiento)references asiento(idasiento)
+go
+
+--relacion entre la tabla vuelo y avion 
+alter table vuelo
+add constraint FK_VUELO_AVION
+foreign key (idavion) references avion (idavion)
+go
+
+--relacion entre la tabla vuelo y reserva
+alter table vuelo
+add constraint FK_VUELO_RESERVA
+foreign key (idreserva) references reserva (idreserva)
+go
+
+--relacion entr la tabla vuelo y tarifa
+alter table vuelo
+add constraint FK_VUELO_TARIFA
+foreign key (idtarifa) references tarifa(idtarifa)
+go
+
+--relacion entre tabla vuelo y aeropuerto
+alter table vuelo 
+add constraint FK_VUELO_AEROPUERTO
+foreign key (idaeropuerto) references aeropuerto(idaeropuerto)
+go
+
+--separa base de datos
+SP_DETACH_DB @DBNAME='NOMBREBD'
+GO
